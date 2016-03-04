@@ -1,0 +1,14 @@
+"version": 1
+"control-service":
+   "hostname": "162.3.132.123"
+   "port": 4524
+   
+dataset:
+  backend: openstack
+  verify_peer: false
+  auth_plugin: password
+  auth_url: https://identity.hybrid.cloud.dt.com:443/identity/v2.0/
+  region: hybrid.cloud
+  tenant_name: admin
+  username: cloud_admin
+  password: FusionSphere123
