@@ -6,6 +6,12 @@ PASSWORD=cnp200@HW
 NODE_TYPE_CONTROL=control
 NODE_TYPE_AGENT=agent
 
+pre_install() {
+    if [ ! -e "/usr/bin/expect" ]; then
+        sudo apt-get -y --force-yes install expect
+    fi
+}
+
 scp_copy() {
     node_type=$1
     host_name=$2
