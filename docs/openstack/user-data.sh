@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 passwd ubuntu<<EOF
 ubuntu
 ubuntu
