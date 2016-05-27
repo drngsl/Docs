@@ -4,7 +4,8 @@ apt-get update
 apt-get -y --force-yes install apt-transport-https ca-certificates
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-VERSION=$(echo `lsb_release -a 2>/dev/null| grep Release |cut -d : -f 2`)
+VERSION=$(echo `lsb_release -r 2>/dev/null| cut -d : -f 2`)
+Codename=$(echo `lsb_release -c 2>/dev/null| cut -d : -f 2`)
 
 if [ "$VERSION" = "12.04" ]; then
     #On Ubuntu Precise 12.04 (LTS)
