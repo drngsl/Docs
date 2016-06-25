@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+### BEGIN INIT INFO
+# Provides: kube-scheduler
+# Required-Start: $etcd
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start:
+# Default-Stop:
+# Short-Description: Start kube-proxy service
+# Description:
+#  http://www.github.com/GoogleCloudPlatform/Kubernetes
+### END INIT INFO
+
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/bin:
+
+BASE=$(basename $0)
