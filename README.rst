@@ -24,40 +24,44 @@ Features
 Prerequisites
 -------------
 
-* Install client if needed. For example if use iSCSI client to connect iSCSI target(Cinder volume), then iSCSI client is needed.
+* Install required package during deploying Fuxi or runing `fuxi-server`.
 
 Ubuntu
 
 ::
 
-    sudo apt-get -y --force-yes install open-iscsi
+    $ sudo apt-get install python-dev
+    $ sudo apt-get install open-iscsi
+    $ sudo apt-get install sysfsutils
 
 CentOS
 
 ::
 
-    sudo yum -y install iscsi-initiator-utils
+    $ sudo yum -y install python-devel
+    $ sudo yum install iscsi-initiator-utils
+    $ sudo yum install sysfsutils
 
 * Install requirements.
 
 ::
 
-    sudo pip install -r requirements.txt
+    $ sudo pip install -r requirements.txt
 
 
-If fuxi-server run with a common user, it is expected to enable fuxi to execute some Linux command without password interact.
+If `fuxi-server` run with a common user, it is expected to enable `fuxi-server` to execute some Linux command without password interact.
 
 Installing Fuxi
 ---------------
 
 ::
 
-    python setup.py install
+    $ python setup.py install
 
 Configuring Fuxi
 ----------------
 
-After install Fuxi, there will generate a configuration file `/etc/fuxi/fuxi.conf`. Edit it according to you requiremnts.
+After installing Fuxi, there will generate a configuration file `/etc/fuxi/fuxi.conf`, then edit it.
 
 * Default section
 
@@ -86,19 +90,19 @@ After install Fuxi, there will generate a configuration file `/etc/fuxi/fuxi.con
 
 Running Fuxi
 ------------
-Fuxi could run with ROOT permission or general use permission. In order to make fuxi-server working normally, some extra config is inevitable.
+Fuxi could run with ROOT permission or general use permission. In order to make `fuxi-server` working normally, some extra config is inevitable.
 
 For ROOT user
 
 ::
 
-    ln -s /lib/udev/scsi_id /usr/local/bin
+    $ ln -s /lib/udev/scsi_id /usr/local/bin
 
 For general user
 
 ::
 
-    echo "fuxi ALL=(root) NOPASSWD: /usr/local/bin/fuxi-rootwrap /etc/fuxi/rootwrap.conf *" > /etc/sudoers.d/fuxi-rootwrap
+    $ echo "fuxi ALL=(root) NOPASSWD: /usr/local/bin/fuxi-rootwrap /etc/fuxi/rootwrap.conf *" > /etc/sudoers.d/fuxi-rootwrap
 
 Here user `fuxi` could change to the user run `fuxi-server` on your host.
 
