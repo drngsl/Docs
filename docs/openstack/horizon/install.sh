@@ -9,6 +9,13 @@ installComp() {
 }
 
 updateSettings() {
+    # openstack-dashboard.conf
+    # redirect root api
+    if [ `grep 'RedirectMatch "^/$" "/dashboard/"' /etc/httpd/conf.d/openstack-dashboard.conf | wc -l` -eq 0 ]; then
+        echo 'RedirectMatch "^/$" "/dashboard/"' >> /etc/httpd/conf.d/openstack-dashboard.conf
+    fi
+
+    # local-settings
     # Update alloded host
     # ALLOWED_HOSTS = ['*',]
 
@@ -23,6 +30,8 @@ updateSettings() {
 
     # identity
     # OPENSTACK_HOST="127.0.0.1"
+
+    # verify for api
     return
 }
 

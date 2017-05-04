@@ -2,7 +2,7 @@
 
 set -x
 
-sudo yum install git createrepo python-virtualenv mock gcc redhat-rpm-config rpmdevtools httpd
+sudo yum install git createrepo python-virtualenv mock gcc redhat-rpm-config rpmdevtools httpd -y
 
 initUser() {
     adduser --shell /bin/bash --home /home/dlrn dlrn
@@ -10,6 +10,8 @@ initUser() {
     newgrp mock
     newgrp dlrn
 }
+
+initUser
 
 sudo systemctl start httpd
 

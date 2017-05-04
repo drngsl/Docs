@@ -21,4 +21,8 @@ rpmBuild() {
 }
 
 cd $DLRN_PATH
-su dlrn && rpmBuild
+for var in $*
+do
+    su - dlrn -c "dlrn --config-file projects.ini --info-repo ../rdoinfo/ --package-name $var"
+done
+# sudo -u dlrn rpmBuild
