@@ -19,7 +19,7 @@ updateSettings() {
     # Update alloded host
     # ALLOWED_HOSTS = ['*',]
 
-    # Use cache
+    # Use cache (Notice loggign successfully but redirect to logging page)
 #    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 #    CACHES = {
 #        'default': {
