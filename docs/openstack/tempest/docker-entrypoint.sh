@@ -29,4 +29,4 @@ crudini --set $CONF_FILE identity password ${PASSWORD:-123456}
 crudini --set $CONF_FILE identity-feature-enabled api_v2 ${API_V2:-true}
 crudini --set $CONF_FILE identity-feature-enabled api_v3 ${API_V3:-false}
 
-$@
+exec "$@"
