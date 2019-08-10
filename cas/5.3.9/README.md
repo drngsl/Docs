@@ -40,7 +40,7 @@ cp tomcat.jks /opt/tomcat/conf
 
 测试https
 
-![](./images/tomcat-https.jpg)
+![](./images/tomcat-https.JPG)
 
 
 ### 部署CAS
@@ -60,11 +60,11 @@ mvn clean package
 
 以上步骤将在target目录生成cas.war文件，将该文件解压至tomcat/webapps目录
 
-![](./images/cas-webapps.jpg)
+![](./images/cas-webapps.JPG)
 
 重启tomcat，访问cas
 
-![](./images/cas-login.jpg)
+![](./images/cas-login.JPG)
 
 **注：**
 
@@ -90,6 +90,25 @@ mvn clean package
 【2】 https://apereo.github.io/cas/5.2.x/installation/Configuration-Properties.html#spring-boot-endpoints
 
 
+## 搭建 cas-management
+
+```bash
+git clone git clone https://github.com/apereo/cas-management-overlay.git
+cd cas-management-overlay
+git checkout 5.3
+mvn clean package
+```
+
+执行以上命令后在target目录生成cas-management
+
+* 配置cas服务地址(application.properties)
+
+```text
+cas.server.name=https://cas.example.org:8443
+cas.server.prefix=${cas.server.name}/cas
+```
+
+
 ## CAS 集成 SAML
 
 在pom.xml中添加saml依赖，重新编译，执行部署流程
@@ -110,6 +129,8 @@ mvn clean package
 cas.serviceRegistry.initFromJson=true
 ```
 
+否则
+
 * SAML集成示例（CAS作为IDP，华为云服务作为SP）
 
 1. 双方交换SAML元数据
@@ -120,7 +141,7 @@ cas.serviceRegistry.initFromJson=true
 
 1.3 添加华为云服务描述文件
 
-![](./huaweicloud-metadata.jpg)
+![](./huaweicloud-metadata.JPG)
 ```json
 {
   "@class" : "org.apereo.cas.support.saml.services.SamlRegisteredService",
