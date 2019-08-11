@@ -108,8 +108,32 @@ cas.server.name=https://cas.example.org:8443
 cas.server.prefix=${cas.server.name}/cas
 ```
 
+## [CAS 支持 Rest](https://apereo.github.io/cas/6.0.x/protocol/REST-Protocol.html)
 
-## CAS 集成 SAML
+添加依赖，重新编译，执行部署流程
+```xml
+<dependency>
+    <groupId>org.apereo.cas</groupId>
+    <artifactId>cas-server-support-rest-tokens</artifactId>
+    <version>${cas.version}</version>
+</dependency>
+```
+
+*注*:
+
+编译过程中可能报错
+```text
+[ERROR] Failed to execute goal on project cas-overlay: Could not resolve dependencies for project org.apereo.cas:cas-overlay:war:1.0: Failure to find net.shibboleth.tool:xmlsectool:jar:2.0.0 in https://mirrors.huaweicloud.com/repository/maven/ was cached in the local repository, resolution will not be reattempted until the update interval of huaweicloud has elapsed or updates are forced -> [Help 1]
+```
+
+可以手动下载xmlsectool，并安装到本地maven仓库
+```bash
+wget https://build.shibboleth.net/nexus/content/repositories/releases/net/shibboleth/tool/xmlsectool/2.0.0/xmlsectool-2.0.0.jar
+mvn install:install-file -Dfile=./xmlsectool-2.0.0.jar -DgroupId=net.shibboleth.tool -DartifactId=xmlsectool -Dversion=2.0.0 -Dpackaging=jar
+```
+
+
+## [CAS 集成 SAML](https://apereo.github.io/cas/6.0.x/protocol/SAML-Protocol.html)
 
 在pom.xml中添加saml依赖，重新编译，执行部署流程
 
