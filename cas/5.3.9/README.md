@@ -1,5 +1,7 @@
 ## CAS部署
 
+官方文档： https://apereo.github.io/cas/5.3.x/index.html#
+
 [cas-overlay-template](https://github.com/apereo/cas-overlay-template)
 
 JDK8
@@ -87,7 +89,7 @@ mvn clean package
 
 【1】 https://blog.csdn.net/fireofjava/article/details/79243868
 
-【2】 https://apereo.github.io/cas/5.2.x/installation/Configuration-Properties.html#spring-boot-endpoints
+【2】 https://apereo.github.io/cas/5.3.x/installation/Configuration-Properties.html#spring-boot-endpoints
 
 
 ## 搭建 cas-management
@@ -130,6 +132,56 @@ cas.server.prefix=${cas.server.name}/cas
 ```bash
 wget https://build.shibboleth.net/nexus/content/repositories/releases/net/shibboleth/tool/xmlsectool/2.0.0/xmlsectool-2.0.0.jar
 mvn install:install-file -Dfile=./xmlsectool-2.0.0.jar -DgroupId=net.shibboleth.tool -DartifactId=xmlsectool -Dversion=2.0.0 -Dpackaging=jar
+```
+
+## CAS 使用 MySQL
+
+参考: https://www.cnblogs.com/jpeanut/p/9231201.html
+
+添加依赖
+```xml
+<!-- Database Authentication Begin -->
+<dependency>
+    <groupId>org.apereo.cas</groupId>
+    <artifactId>cas-server-support-jdbc</artifactId>
+    <version>${cas.version}</version>
+</dependency>
+<dependency>
+   <groupId>org.apereo.cas</groupId>
+   <artifactId>cas-server-support-jdbc-drivers</artifactId>
+   <version>${cas.version}</version>
+</dependency>
+<!-- Database Authentication End -->
+```
+
+添加JDBC配置项
+
+```text
+cas.authn.jdbc.query[0].sql=SELECT * FROM cas_user_base WHERE user_name=?
+cas.authn.jdbc.query[0].url=jdbc:mysql://localhost:3306/test_cas?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+cas.authn.jdbc.query[0].driverClass=com.mysql.jdbc.Driver
+cas.authn.jdbc.query[0].dialect=org.hibernate.dialect.MySQLDialect
+cas.authn.jdbc.query[0].user=root
+cas.authn.jdbc.query[0].password=
+cas.authn.jdbc.query[0].fieldPassword=user_psd
+```
+
+附： 测试数据库
+
+```
+--创建数据库表空间
+CREATE DATABASE test_cas DEFAULT CHARSET utf8 COLLATE utf8_general_ci;  
+USE test_cas;  
+--创建帐号信息表
+DROP TABLE IF EXISTS `cas_user_base`;  
+CREATE TABLE `cas_user_base` (  
+  `id` INT(11) NOT NULL AUTO_INCREMENT,  
+  `user_name` VARCHAR(45) DEFAULT NULL,  
+  `user_psd` VARCHAR(45) DEFAULT NULL,  
+  PRIMARY KEY (`id`)  
+);  
+--插入登录帐号数据
+INSERT INTO `cas_user_base` VALUES (1,'admin','123456'),(2,'guest','123456');
 ```
 
 
@@ -180,3 +232,37 @@ cas.serviceRegistry.initFromJson=true
 1.4 下载cas saml元数据文件，导入到华为云中，具体操作参考 https://support.huaweicloud.com/usermanual-iam/zh-cn_topic_0046611277.html
 
 
+附： NameId-Format
+| 值 | URI |  说明 |
+| :-----: | :-----: | :-----: |
+| urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified | 来自身份提供者的 Subject NameID 值可以是任何格式 |
+| Email Address | urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress | 来自身份提供者的 Subject NameID 值使用电子邮件地址格式 |
+| X.509 Subject Name | urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName | |
+| Kerberos Principal Name | urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos | |
+| Entity Identifier | urn:oasis:names:tc:SAML:2.0:nameid-format:entity | |
+| Transient Identifier | urn:oasis:names:tc:SAML:2.0:nameid-format:transient ||
+| Persistent Identifier | urn:oasis:names:tc:SAML:2.0:nameid-format:persistent ||
+
+
+## CAS 配置 SwaggerAPI
+
+添加依赖
+
+```xml
+<dependency>
+  <groupId>org.apereo.cas</groupId>
+  <artifactId>cas-server-documentation-swagger</artifactId>
+  <version>${cas.version}</version>
+</dependency>
+```
+
+重新部署后访问：
+
+| 描述 |  地址 |
+| :-----: | :-----: |
+| Swagger API规范 | http://localhost/cas/v2/api-docs |
+| Swagger UI | http://localhost/cas/swagger-ui.html |
+
+##  动态添加services
+
+参考： https://www.jianshu.com/p/8c1fd3107b06?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
