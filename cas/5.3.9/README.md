@@ -233,6 +233,7 @@ cas.serviceRegistry.initFromJson=true
 
 
 附： NameId-Format
+
 | 值 | URI |  说明 |
 | :-----: | :-----: | :-----: |
 | urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified | 来自身份提供者的 Subject NameID 值可以是任何格式 |
