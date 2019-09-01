@@ -27,6 +27,8 @@ keytool -export -alias tomcat -keystore tomcat.jks -file tomcat.crt
 keytool -import -file tomcat.crt -alias tomcat -keystore /opt/jdk/jre/lib/security/cacerts 
 ```
 
+![](./images/genkey.png)
+
 tomcat配置证书
 
 将上面生成的tomcat.jks复制到tomcat conf目录
